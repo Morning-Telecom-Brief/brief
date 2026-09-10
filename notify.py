@@ -7,9 +7,14 @@ teaser, and links to the published page.
 Usage:  python3 notify.py 2026-09-10 [--dry-run]
 
 Environment:
-  PUSHOVER_TOKEN   required  application API token from pushover.net/apps/build
-  PUSHOVER_USER    required  your user key from the Pushover dashboard
+  PUSHOVER_TOKEN   optional  application API token from pushover.net/apps/build
+  PUSHOVER_USER    optional  your user key from the Pushover dashboard
   SITE_BASE_URL    optional  e.g. https://your-project.workers.dev
+
+Pushover is an upgrade, not a requirement. With neither Pushover variable set
+this exits quietly without sending, because the routine's own push and email
+notification already covers delivery. Setting only one of the pair is treated
+as a mistake and reported.
 """
 
 import os
@@ -100,8 +105,17 @@ def main():
         return
 
     token, user = os.environ.get("PUSHOVER_TOKEN"), os.environ.get("PUSHOVER_USER")
+    if not token and not user:
+        # Neither variable set means Pushover was never configured, so there is
+        # nothing to fail about - the brief is already written and published,
+        # and the routine's own notification carries it. Exit 0 so the run is
+        # not reported as a partial failure every morning.
+        print("pushover: not configured - skipping (routine notification covers this)")
+        return
     if not token or not user:
-        sys.exit("PUSHOVER_TOKEN and PUSHOVER_USER must be set in the environment")
+        # One without the other is a real misconfiguration and worth surfacing.
+        missing = "PUSHOVER_TOKEN" if not token else "PUSHOVER_USER"
+        sys.exit(f"{missing} is not set - set both Pushover variables, or neither")
     payload.update(token=token, user=user)
 
     data = urllib.parse.urlencode(payload).encode()

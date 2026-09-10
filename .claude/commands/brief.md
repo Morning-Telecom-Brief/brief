@@ -210,22 +210,36 @@ Reads today's brief, builds a short teaser, and sends it to my phone with a link
 to the published page. Quiet days go out at low priority so they arrive without a
 sound.
 
-This needs `PUSHOVER_TOKEN` and `PUSHOVER_USER` in the environment, and
-`SITE_BASE_URL` for the link. If they are missing, the script says so and exits
-non-zero. When that happens, finish the run anyway and tell me the notification
-failed and why — the brief is already written and pushed, which is the part that
-matters. Add `--dry-run` to see what would be sent without sending it.
+**Pushover is optional.** If `PUSHOVER_TOKEN` and `PUSHOVER_USER` are both
+absent, the script prints that it is skipping and exits 0. That is the expected,
+supported path for anyone relying on the routine's own push or email notification
+instead. **Do not report a skipped send as a failure** — say it was skipped, or
+say nothing about it.
+
+If only one of the pair is set, that is a real misconfiguration: the script exits
+non-zero and you should tell me plainly which one is missing. `SITE_BASE_URL` is
+what puts the link in the message. Add `--dry-run` to see what would be sent
+without sending it.
 
 ## 10. Report back
 
-In your reply to me, keep it short: how many items ran in each beat, anything
-you dropped as redundant or over budget, and whether the push and the
-notification both succeeded. If any agent returned `Source notes:` lines about a
-dead, moved, or paywalled source, surface them here so I can update the agent
-file — those belong in your reply, never in the brief.
+**Open your reply with the link to today's brief, on its own line** — the
+`SITE_BASE_URL` value followed by `/$TODAY.html`. If `SITE_BASE_URL` is not set,
+say that instead of inventing a URL.
+
+This matters more than it looks. When this runs as a scheduled routine, Claude's
+own push and email notification carries a summary of your reply, so leading with
+the URL is what makes that notification tappable. Without it, anyone not using
+Pushover is told the brief is ready and then has to go find it.
+
+Then keep it short: how many items ran in each beat, anything you dropped as
+redundant or over budget, and whether the push succeeded. If any agent returned
+`Source notes:` lines about a dead, moved, or paywalled source, surface them here
+so I can update the agent file — those belong in your reply, never in the brief.
 
 State any failure plainly rather than rounding it up to success. A run where the
-brief was written but the push failed, or the push worked but Pushover did not,
-is a partial run and I need to know which half broke.
+brief was written but the push failed is a partial run and I need to know. A
+skipped Pushover send is **not** a failure: Pushover is optional, and skipping it
+when it was never configured is the designed behavior.
 
 Do not paste the brief back at me. It is in the file.

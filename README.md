@@ -57,7 +57,7 @@ That's it. Next morning, your phone buzzes.
 |---|---|
 | **Claude Pro or Max** | The daily run is an ordinary Claude Code session |
 | **GitHub account** | Free. Private repository is fine |
-| **Pushover** | ~$5 one-time, for phone notifications. Optional |
+| **Notifications** | Free — the routine's own push and/or email. **Pushover** (~$5 one-time) is an optional upgrade |
 | **Cloudflare** | Free, optional — only if you want a website |
 
 **Running cost: nothing.** No API key anywhere in this project. The research
@@ -99,7 +99,7 @@ as short paragraphs.
           +--> site/ .................. optional website
           |
           v
-        Pushover --> phone notification with a link
+        notification --> push or email, with a link
 ```
 
 ## The beats in this repository are an example
@@ -149,7 +149,7 @@ library would add.
 | `.claude/agents/*.md` | Your beats (example ones ship in the box) |
 | `.claude/commands/brief.md` | The pipeline the daily run follows |
 | `render.py` | Turns `briefs/*.md` into the website |
-| `notify.py` | Sends the Pushover notification |
+| `notify.py` | Sends the optional Pushover notification |
 | `covered.json` | Dedupe ledger: `{url, headline, date}` |
 | `briefs/` | Your archive, one markdown file per day |
 | `SETUP.md` | Manual setup, if you'd rather not use `/setup` |

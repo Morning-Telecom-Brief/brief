@@ -30,9 +30,28 @@ copy to edit.
 
 ---
 
-## Step 2 — Get your Pushover credentials
+## Step 2 — Choose how the brief reaches you
 
-Skip this if you don't want phone notifications; everything else still works.
+Two ways. **You do not need both, and the free one takes no setup at all.**
+
+### Option A — the routine's own notification (default, $0, nothing to configure)
+
+A Claude routine can notify you when a run finishes: **push** to the Claude app
+on your phone, **email** to your inbox, or both. You switch these on in Step 5
+while creating the routine. Nothing to sign up for, no keys, no credit card.
+
+The brief command leads its final message with the link to that morning's page,
+so the notification you get is tappable straight through to the brief.
+
+**If that's all you want, skip to Step 3.**
+
+### Option B — Pushover (optional upgrade)
+
+Pushover delivers a purpose-built message rather than a run summary: the top
+headline as the notification text, a per-beat tally, a **Read the brief** button,
+and quiet days sent silently at low priority so they never wake you.
+
+It runs about $5 one-time on your phone's app store, and needs two keys:
 
 1. Sign in at **https://pushover.net**
 2. Copy **Your User Key** from the dashboard — this is `PUSHOVER_USER`
@@ -40,8 +59,9 @@ Skip this if you don't want phone notifications; everything else still works.
    want, and create it
 4. Copy the **API Token/Key** — this is `PUSHOVER_TOKEN`
 
-You need both. Keep them somewhere temporary — they go into the environment in
-Step 4, never into the repository.
+Set **both or neither** — just one of the pair is treated as a mistake and
+reported. Keep them somewhere temporary; they go into the environment in Step 4,
+never into the repository.
 
 ---
 
@@ -86,8 +106,8 @@ can also enable it later from the project's settings.
 
 ## Step 4 — Create a cloud environment
 
-This controls what the daily run can reach on the network, and holds your
-Pushover keys.
+This controls what the daily run can reach on the network, and holds your site
+URL — plus your Pushover keys, if you chose Pushover in Step 2.
 
 **Create a new environment — do not edit your Default one.** Default uses
 *Trusted* access, which allows package registries and dev domains that your other
@@ -177,8 +197,9 @@ api.pushover.net
    Leave **"Also include default list of common package managers"** unchecked —
    this project has no dependencies.
 
-   `api.pushover.net` is what lets the notification out. Without it the brief is
-   still written and published, but your phone stays quiet.
+   `api.pushover.net` matters only if you chose Pushover in Step 2 — it is what
+   lets that notification out. Drop the line if you are using the routine's own
+   notification, which does not go through the allowlist at all.
 
    **This list matches the OSP/fiber beats shipped in this repository.** If you
    rewrite the beats for a different field, replace these with your own sources.
@@ -195,15 +216,25 @@ api.pushover.net
 > setting — several major industry sites return 403 to any bot. Those items get
 > dropped and reported. That is the rule working, not a misconfiguration.
 
-6. In **Environment variables**, add these three lines with your own values:
+6. In **Environment variables**, add your site URL:
+
+```
+SITE_BASE_URL=https://your-project.your-subdomain.workers.dev
+```
+
+**Only if you chose Pushover in Step 2**, add these two as well:
 
 ```
 PUSHOVER_TOKEN=your_application_api_token
 PUSHOVER_USER=your_user_key
-SITE_BASE_URL=https://your-project.your-subdomain.workers.dev
 ```
 
 No quotes, no spaces around `=`, no trailing slash on the URL.
+
+If you are not using Pushover, leave both of those out entirely. The
+notification step detects that they are absent and skips itself cleanly — it is
+not an error and your run is not a partial success. Setting only one of the pair
+*is* an error, and it will be reported.
 
 7. **Create environment**
 
@@ -228,13 +259,16 @@ No quotes, no spaces around `=`, no trailing slash on the URL.
 Run the daily research brief for this repository.
 
 Read .claude/commands/brief.md and follow it exactly, start to finish. Every
-step, in order, including rendering the site, committing, pushing, and sending
-the Pushover notification.
+step, in order, including rendering the site, committing, pushing, and the
+notification step.
 
 Work on the main branch and push directly to it. Do not open a pull request.
 
-Do not skip the push or the notification. If either one fails, say so plainly
-in your final message instead of reporting success.
+Do not skip the push. If it fails, say so plainly in your final message instead
+of reporting success. If Pushover is not configured the notification step skips
+itself, which is expected and is not a failure.
+
+Begin your final message with the link to today's brief.
 ```
 
 4. **Repositories:** your repository from Step 1
@@ -256,9 +290,17 @@ there's a deliberate few-minute stagger on top. **Schedule it about 15 minutes
 before you want the notification.** The offset is consistent per routine, so
 after a few mornings you can tighten it.
 
-While you're there: **Push notifications** is Claude's own "routine finished"
-alert, separate from the Pushover message carrying the brief. Leaving it on means
-two notifications every morning.
+### Switch on the notification you picked in Step 2
+
+The routine's own **notification** settings are what deliver the brief if you
+skipped Pushover. **Push** goes to the Claude app on your phone, **Email** goes
+to your inbox, and you can have both. Because the brief command leads its final
+message with the link, what arrives is tappable.
+
+- **Not using Pushover?** Turn on Push, Email, or both. This is your delivery —
+  leave them all off and nothing will reach you.
+- **Using Pushover?** Turn them off, or you get two notifications every morning:
+  Pushover's message and Claude's run summary.
 
 ---
 
@@ -287,8 +329,12 @@ now** on the routine and watch it.
 
 **Push fails:** check whether `main` is a protected branch.
 
-**No notification:** confirm `api.pushover.net` is in the allowlist and both
-Pushover values are set. The run log shows the exact error.
+**No notification:** if you are using the routine's own notification, check that
+**Push** or **Email** is actually switched on for the routine — off by default is
+the usual cause. If you are using Pushover, confirm `api.pushover.net` is in the
+allowlist and that both Pushover values are set. Either way the run log shows the
+exact error, and a run that says it skipped the Pushover step is telling you it
+found no keys.
 
 **Site doesn't update:** confirm the Cloudflare project's production branch is
 `main` and its build output directory is `site`.
@@ -306,7 +352,7 @@ writes, publishes, pushes, and notifies. You read it.
 | Pause it | Routine detail page → toggle in **Repeats** |
 | Change what a beat covers | Edit the file in `.claude/agents/` and commit |
 | Add or drop a source | Edit the agent file, and update the allowlist in Step 4 |
-| Stop notifications | Remove `PUSHOVER_TOKEN` from the environment |
+| Stop notifications | Turn off the routine's Push/Email, and remove `PUSHOVER_TOKEN` if set |
 | See why a run did nothing | Routine detail page → open the run and read the log |
 
 A green run status only means the session started and exited without an

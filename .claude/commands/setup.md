@@ -137,7 +137,8 @@ exists.
 Give them a short, ordered list. No essay, and no pointing at `SETUP.md`.
 
 Include the **allowlist block**, ready to paste, built from every domain across
-their beats — apex and `*.` wildcard for each, plus `api.pushover.net`:
+their beats — apex and `*.` wildcard for each, plus `api.pushover.net` only if
+they chose Pushover below:
 
 ```
 example.com
@@ -148,19 +149,26 @@ api.pushover.net
 
 Then the steps, in this order:
 
-1. **Pushover** (skip if they don't want phone notifications) — user key from
-   the dashboard, then create an application for the API token
+1. **Notifications** — decide this first, because it changes step 3. The
+   default costs nothing and needs no account: the routine's own **Push** (to
+   the Claude app) and **Email** toggles, switched on in step 4. **Pushover**
+   (~$5 one-time) is an optional upgrade that sends a crafted teaser with a
+   direct link instead of a run summary — if they want it, they need their user
+   key from the dashboard plus an application API token. Ask which they want;
+   do not assume Pushover
 2. **Cloudflare** — optional. Their briefs are committed as markdown and GitHub
    renders it, so the website is an upgrade, not a requirement. If they want it:
    dash.cloudflare.com → Workers & Pages → import their repository → build
    command empty, deploy command `npx wrangler deploy`
 3. **Cloud environment** at claude.ai/code — a **new** one, never their Default,
    since narrowing Default breaks their other work. Network access **Custom**
-   with the allowlist above, plus environment variables for `PUSHOVER_TOKEN`,
-   `PUSHOVER_USER`, and `SITE_BASE_URL` if they set up the site
+   with the allowlist above, plus `SITE_BASE_URL` if they set up the site, and
+   `PUSHOVER_TOKEN` and `PUSHOVER_USER` only if they chose Pushover in step 1
 4. **Routine** at claude.ai/code/routines — the prompt to paste is in
    `SETUP.md` Step 5; their repository; the environment from step 3; **remove
-   all connectors**; schedule it about **15 minutes before** they want the
+   all connectors**; turn on the routine's **Push** and/or **Email**
+   notification unless they chose Pushover, in which case turn both off to avoid
+   a duplicate every morning; schedule it about **15 minutes before** they want the
    notification, since the run takes 6–12 minutes and starts at the scheduled
    time rather than finishing then
 5. **Check usage credits are off** at claude.ai/settings/usage, so hitting a
