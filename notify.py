@@ -30,6 +30,7 @@ MONTHS = ("Jan", "Feb", "Mar", "Apr", "May", "Jun",
 # Long section names cost characters that are better spent on the headline.
 SHORT = {
     "OSP news": "OSP",
+    "Market forces": "Market",
     "Professional development": "ProDev",
     "Quality practice": "Quality",
 }
@@ -65,7 +66,7 @@ def build(iso, md):
     if quiet:
         # Still worth sending: it confirms the run happened. Priority -1 makes
         # it arrive silently so a quiet day never wakes anyone up.
-        return f"Telecom brief - {stamp}", "Nothing new across all three beats.", -1
+        return f"Telecom brief - {stamp}", "Nothing new across any beat.", -1
 
     total = sum(n for _, n in counts)
     tally = " / ".join(f"{SHORT.get(s, s)} {n}" for s, n in counts)

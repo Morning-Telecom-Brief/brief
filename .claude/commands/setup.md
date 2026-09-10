@@ -45,9 +45,9 @@ that is question 1 or 4. Never send a third round of questions.
 
 ## Step 2 — Propose the beats, and confirm
 
-From their answers, group the topics into **two to four beats**. Three is the
-usual sweet spot. A beat is a coherent area one researcher could own — not a
-single topic and not everything at once.
+From their answers, group the topics into **two to five beats**. Three or four
+is the usual sweet spot. A beat is a coherent area one researcher could own —
+not a single topic and not everything at once.
 
 Show them the proposed structure compactly: a name and one line of scope each.
 Something like:
@@ -168,9 +168,9 @@ Then the steps, in this order:
    `SETUP.md` Step 5; their repository; the environment from step 3; **remove
    all connectors**; turn on the routine's **Push** and/or **Email**
    notification unless they chose Pushover, in which case turn both off to avoid
-   a duplicate every morning; schedule it about **15 minutes before** they want the
-   notification, since the run takes 6–12 minutes and starts at the scheduled
-   time rather than finishing then
+   a duplicate every morning; schedule it about **15 minutes before** they
+   want the notification, since the run takes 6–12 minutes and starts at the
+   scheduled time rather than finishing then
 5. **Check usage credits are off** at claude.ai/settings/usage, so hitting a
    plan limit skips a run instead of billing them
 6. **Run it once now** with **Run now**, rather than waiting for the schedule
