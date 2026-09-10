@@ -79,7 +79,7 @@ Cloudflare's free tier. Setup will ask.
 
 ## How it works
 
-Two to four research agents each cover a "beat." They run in parallel every
+Two to five research agents each cover a "beat." They run in parallel every
 morning, each reading a ledger of what's already been reported so nothing
 repeats. Findings get merged, de-duplicated across beats, ranked, and written up
 as short paragraphs.
@@ -90,6 +90,7 @@ as short paragraphs.
           +-- beat 1 ....... your topics
           +-- beat 2 ....... your topics
           +-- beat 3 ....... your topics
+          +-- beat 4 ....... your topics
           |
           v
         merge, drop cross-beat duplicates, rank
@@ -104,8 +105,9 @@ as short paragraphs.
 
 ## The beats in this repository are an example
 
-`.claude/agents/` ships with three beats tuned for outside plant fiber design
-and QC. They are there so you can see what a well-specified beat looks like —
+`.claude/agents/` ships with four beats tuned for outside plant fiber design
+and QC — industry news, market forces, professional development, and quality
+practice. They are there so you can see what a well-specified beat looks like —
 **`/setup` replaces them with yours.**
 
 If you'd rather do it by hand, they're plain markdown. Copy one, rewrite the

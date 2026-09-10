@@ -1,5 +1,5 @@
 ---
-description: Run all three research beats in parallel and write today's brief
+description: Run all four research beats in parallel and write today's brief
 ---
 
 Produce today's research brief. Work through these steps in order.
@@ -22,18 +22,20 @@ If `briefs/$TODAY.md` already exists, you are doing a **second run for the
 same day**. Do not overwrite it: you will add new items to the existing file
 in step 5.
 
-## 2. Run all three beats in parallel
+## 2. Run all four beats in parallel
 
-Spawn all three subagents **in a single message** so they run concurrently,
-and wait for all three to return:
+Spawn all four subagents **in a single message** so they run concurrently,
+and wait for all four to return:
 
 - `osp-news` — outside plant and fiber industry news
+- `market-forces` — supply chain, trade policy, capital, labor, demand drivers
 - `prodev` — professional development and credentialing
 - `quality-practice` — the QA/QC craft itself
 
 Give each the same instruction: read `covered.json` first, skip anything
-already covered, return at most 6 items, and return exactly `nothing new` if
-there is nothing worth reporting.
+already covered, return exactly `nothing new` if there is nothing worth
+reporting, and respect the item cap in its own file — 6 for most beats,
+5 for `market-forces`.
 
 Each agent reads `covered.json` on its own, so they may independently pick the
 same story. That is expected — step 3 handles it.
@@ -44,11 +46,14 @@ than once, and do not write items for a beat that did not report.
 
 ## 3. Merge and drop redundancy
 
-You now have up to 18 items. Cut them down:
+You now have up to 23 items. Cut them down:
 
 - **Same URL in two beats** — keep it once, in whichever beat it fits best.
   Prefer the more specific beat: a BICSI manual revision is `prodev`, not
-  `osp-news`, even if both found it.
+  `osp-news`, even if both found it. `osp-news` and `market-forces` will
+  collide most often — funding and supply stories look like both. Put it in
+  `market-forces` when the point is the money, the materials, or the timeline;
+  put it in `osp-news` when the point is what was built, ruled, or standardised.
 - **Same story, different URLs** — keep the better source (primary document
   over coverage of it; full text over a summary) and drop the rest.
 - **Same substance, different framing** — if two items would leave me with the
@@ -75,14 +80,14 @@ Budget **60 to 90 words per item** — what happened, plus a "why it matters"
 that names an actual consequence rather than gesturing at significance. Three
 sentences is the usual shape.
 
-The file has a **1400-word ceiling**. At eighteen items that is roughly 75
-words each, which is the point: the extra room exists to carry **more items
-from more sources**, not to make each item longer. Resist padding.
+The file has an **1800-word ceiling**. At twenty-three items that is roughly
+78 words each, which is the point: the room exists to carry **more items from
+more sources**, not to make each item longer. Resist padding.
 
 Let a busy day run long and a quiet day run short. Only if you genuinely exceed
-1400 words, **cut the weakest items entirely** — never truncate an item
-mid-thought or shave every item into fragments. Eight well-explained items beat
-eighteen stubs.
+1800 words, **cut the weakest items entirely** — never truncate an item
+mid-thought or shave every item into fragments. Ten well-explained items beat
+twenty-three stubs.
 
 Items you cut are *not* reported, so they do **not** go into `covered.json`.
 They stay eligible and can resurface tomorrow.
@@ -92,8 +97,8 @@ They stay eligible and can resurface tomorrow.
 Write to `briefs/$TODAY.md`.
 
 Structure: a date header, then one `##` section per beat that reported
-anything, in this order — OSP news, Professional development, Quality
-practice. Under each section, one **short paragraph per item**.
+anything, in this order — OSP news, Market forces, Professional development,
+Quality practice. Under each section, one **short paragraph per item**.
 
 Paragraphs, not bullet fragments. Each item is three or four sentences of
 flowing prose: open with the headline as a markdown link, say what happened in
@@ -114,6 +119,10 @@ cost, schedule, or deadline consequence, concretely.
 **[Second item](https://example.com/other)** — Same shape. Vary the sentence
 structure between items; do not write the same template five times.
 
+## Market forces
+
+...
+
 ## Professional development
 
 ...
@@ -128,19 +137,19 @@ A beat that returned nothing gets its heading and a single line —
 beat that errored gets `_Beat did not run this time._` instead, so a coverage
 gap never looks like a quiet day.
 
-**If all three beats returned nothing**, skip all of the above and write a
+**If all four beats returned nothing**, skip all of the above and write a
 one-line file, nothing else:
 
 ```markdown
-# Brief — 2026-09-09 — nothing new across all three beats.
+# Brief — 2026-09-09 — nothing new across all four beats.
 ```
 
 On a second run for a day, add the new items into the existing sections of
-today's file rather than replacing it, keep the whole file under 1400 words,
+today's file rather than replacing it, keep the whole file under 1800 words,
 and if the file was the one-line "nothing new" version, replace that line with
 the real structure.
 
-Then verify: `wc -w briefs/$TODAY.md`. If it is 1400 or over, cut the weakest
+Then verify: `wc -w briefs/$TODAY.md`. If it is 1800 or over, cut the weakest
 item and check again.
 
 ## 6. Append to covered.json
