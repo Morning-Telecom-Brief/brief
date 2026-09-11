@@ -105,6 +105,13 @@ as short paragraphs.
         notification --> push or email, with a link
 ```
 
+## Not in telecom? Look at `examples/`
+
+[`examples/beats/`](examples/beats/) has the same beat structure written for
+commercial real estate underwriting and for data center siting — nothing to do
+with fiber. They are there to show the scaffolding is the product and the
+subject is yours. `/setup` writes your own either way.
+
 ## The beats in this repository are an example
 
 `.claude/agents/` ships with four beats tuned for outside plant fiber design
