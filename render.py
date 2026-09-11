@@ -6,6 +6,12 @@ morning, and a site build that can't break because a dependency moved is worth
 more here than any convenience a markdown library would add.
 
 Usage:  python3 render.py
+
+Environment:
+  BRIEF_TITLE   optional  what your brief is called, e.g. "Field notes".
+                          Defaults to "Daily morning brief". Set it once in
+                          your environment and it names every page, the
+                          browser tab, and the phone notification.
 """
 
 import html
@@ -15,6 +21,11 @@ from datetime import date
 
 BRIEFS_DIR = "briefs"
 SITE_DIR = "site"
+
+# Nothing here is telecom-specific on purpose: one variable names the whole
+# site, so a brief about anything reads as its own rather than as someone
+# else's template with the words left in.
+TITLE = os.environ.get("BRIEF_TITLE", "Daily morning brief")
 
 MONTHS = ("Jan", "Feb", "Mar", "Apr", "May", "Jun",
           "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
@@ -179,7 +190,7 @@ def page(title, body, back=False):
 <div class="wrap">
 {home}
 {body}
-<footer>Generated from the telecom-brief repository.</footer>
+<footer>Generated automatically each morning.</footer>
 </div>
 </body>
 </html>
@@ -202,14 +213,14 @@ def main():
 
     # One page per brief.
     for iso, md in briefs:
-        body = masthead("Telecom brief", pretty_date(iso)) + body_html(md)
+        body = masthead(TITLE, pretty_date(iso)) + body_html(md)
         with open(os.path.join(SITE_DIR, f"{iso}.html"), "w", encoding="utf-8") as fh:
-            fh.write(page(f"Telecom brief - {iso}", body, back=True))
+            fh.write(page(f"{TITLE} - {iso}", body, back=True))
 
     # Index: newest brief in full, everything older as a list.
     if briefs:
         iso, md = briefs[0]
-        body = masthead("Telecom brief", pretty_date(iso)) + body_html(md)
+        body = masthead(TITLE, pretty_date(iso)) + body_html(md)
         if len(briefs) > 1:
             items = "\n".join(
                 f'<li><a href="{o}.html">{pretty_date(o)}</a></li>'
@@ -217,19 +228,19 @@ def main():
             )
             body += f'<div class="archive"><h2>Earlier briefs</h2><ul>{items}</ul></div>'
     else:
-        body = (masthead("Telecom brief", "Not running yet")
+        body = (masthead(TITLE, "Not running yet")
                 + "<p class=\"quiet\">No briefs yet. The first one appears here "
                   "after the scheduled run.</p>")
 
     with open(os.path.join(SITE_DIR, "index.html"), "w", encoding="utf-8") as fh:
-        fh.write(page("Telecom brief", body))
+        fh.write(page(TITLE, body))
 
     # wrangler.jsonc sets not_found_handling to "404-page", which expects this.
     nf = (masthead("Not found", "404")
           + '<p class="quiet">No brief at that address.</p>'
           + '<p><a href="./">Go to the latest brief</a></p>')
     with open(os.path.join(SITE_DIR, "404.html"), "w", encoding="utf-8") as fh:
-        fh.write(page("Not found - Telecom brief", nf))
+        fh.write(page(f"Not found - {TITLE}", nf))
 
     print(f"rendered {len(briefs)} brief(s) into {SITE_DIR}/")
 

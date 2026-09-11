@@ -240,11 +240,18 @@ api.pushover.net
 > setting — several major industry sites return 403 to any bot. Those items get
 > dropped and reported. That is the rule working, not a misconfiguration.
 
-6. In **Environment variables**, add your site URL:
+6. In **Environment variables**, add what your brief is called and, if you set
+   up a site, its URL:
 
 ```
+BRIEF_TITLE=Daily morning brief
 SITE_BASE_URL=https://your-project.your-subdomain.workers.dev
 ```
+
+   `BRIEF_TITLE` names every page, the browser tab, and the phone notification.
+   Set it to whatever your brief actually is — `Cap Rate Weekly`, `Field
+   notes`, `Grid & Power` — and nothing anywhere will say someone else's
+   subject back at you. Leave it out and it reads "Daily morning brief".
 
 **Only if you chose Pushover in Step 2**, add these two as well:
 
@@ -389,7 +396,7 @@ read it when something looks off.
 the item **went into a brief**, not the article's publication date — which is
 what makes pruning by age straightforward.
 
-It grows by up to 18 entries per run. Every agent reads the whole file before
+It grows by up to 23 entries per run at four beats — beats × the per-beat cap. Every agent reads the whole file before
 searching, so once it's long it costs real context each run. Prune past roughly
 300–500 entries.
 

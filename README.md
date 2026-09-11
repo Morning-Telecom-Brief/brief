@@ -1,4 +1,4 @@
-# Telecom brief kit
+# Daily morning brief
 
 **A daily brief on whatever you need to stay current on — researched, written,
 and delivered to your phone every morning while you sleep.**
@@ -6,9 +6,11 @@ and delivered to your phone every morning while you sleep.**
 You tell it what topics matter to you. It finds the sources, reads them daily,
 skips anything it already told you, and sends you a short brief with a link.
 
-Built for telecom, but the topics are yours. Fiber buildouts and BEAD funding,
-copper retirement, competitor activity, supply chain and manufacturing,
-standards work, certifications — whatever you actually need to know about.
+The beats that ship with it are tuned for telecom, but **the topics are
+yours.** Fiber buildouts and BEAD funding. Or cap rates, construction costs and
+zoning. Or data center siting, power contracts and chip supply. Or the
+certification deadlines in whatever field you actually work in. `/setup`
+replaces the examples with your own and goes and finds the sources for them.
 
 **[See what a brief looks like →](example-brief.md)**
 

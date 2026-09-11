@@ -10,6 +10,10 @@ Environment:
   PUSHOVER_TOKEN   optional  application API token from pushover.net/apps/build
   PUSHOVER_USER    optional  your user key from the Pushover dashboard
   SITE_BASE_URL    optional  e.g. https://your-project.workers.dev
+  BRIEF_TITLE      optional  what your brief is called. Defaults to
+                             "Daily morning brief". Use the same value here
+                             as render.py sees, so the notification and the
+                             page it links to agree.
 
 Pushover is an upgrade, not a requirement. With neither Pushover variable set
 this exits quietly without sending, because the routine's own push and email
@@ -24,6 +28,8 @@ import urllib.parse
 import urllib.request
 
 API = "https://api.pushover.net/1/messages.json"
+
+TITLE = os.environ.get("BRIEF_TITLE", "Daily morning brief")
 MONTHS = ("Jan", "Feb", "Mar", "Apr", "May", "Jun",
           "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
 
@@ -66,7 +72,7 @@ def build(iso, md):
     if quiet:
         # Still worth sending: it confirms the run happened. Priority -1 makes
         # it arrive silently so a quiet day never wakes anyone up.
-        return f"Telecom brief - {stamp}", "Nothing new across any beat.", -1
+        return f"{TITLE} - {stamp}", "Nothing new across any beat.", -1
 
     total = sum(n for _, n in counts)
     tally = " / ".join(f"{SHORT.get(s, s)} {n}" for s, n in counts)
@@ -75,7 +81,7 @@ def build(iso, md):
         body += f"\n\n+{total - 1} more - {tally}"
     else:
         body += f"\n\n{tally}"
-    return f"Telecom brief - {stamp} ({total})", body, 0
+    return f"{TITLE} - {stamp} ({total})", body, 0
 
 
 def main():

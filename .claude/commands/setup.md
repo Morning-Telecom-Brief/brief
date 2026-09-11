@@ -38,6 +38,8 @@ time — it is tedious and they will lose patience.
    go in first.
 6. **Anything you specifically do not want?** Vendor press releases, stock
    analysis, conference marketing — whatever wastes your time.
+7. **What should it be called?** The name on the page and the morning
+   notification. Optional — suggest one from their answers if they shrug.
 
 If they answer thinly, work with it and infer. Ask at most **one** short
 follow-up round, and only if something essential is genuinely missing — usually
@@ -162,8 +164,9 @@ Then the steps, in this order:
    command empty, deploy command `npx wrangler deploy`
 3. **Cloud environment** at claude.ai/code — a **new** one, never their Default,
    since narrowing Default breaks their other work. Network access **Custom**
-   with the allowlist above, plus `SITE_BASE_URL` if they set up the site, and
-   `PUSHOVER_TOKEN` and `PUSHOVER_USER` only if they chose Pushover in step 1
+   with the allowlist above, plus `BRIEF_TITLE` set to what they want their
+   brief called, `SITE_BASE_URL` if they set up the site, and `PUSHOVER_TOKEN`
+   and `PUSHOVER_USER` only if they chose Pushover in step 1
 4. **Routine** at claude.ai/code/routines — the prompt to paste is in
    `SETUP.md` Step 5; their repository; the environment from step 3; **remove
    all connectors**; turn on the routine's **Push** and/or **Email**
