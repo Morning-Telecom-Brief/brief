@@ -34,6 +34,15 @@ time — it is tedious and they will lose patience.
    *"AT&T fiber buildouts, BEAD funding news, copper retirement, supply chain
    and manufacturing — Corning, Prysmian — competitor activity, government
    policy."*
+
+   **Ask where, too.** National, or does a region, state or metro actually
+   decide what matters to them? *"Telecom, but the Northeast."* *"Multifamily,
+   Phoenix and Tucson."* Geography changes a source list more than almost
+   anything else: state regulators, regional grid operators, state broadband
+   offices, metro business journals and county dockets are frequently the whole
+   story, and a national list will miss all of it. If they name a region, go
+   find that region's bodies specifically in Step 3 — do not settle for national
+   coverage that occasionally mentions their state.
 5. **Any sources you already read and trust?** Optional. If you have them, they
    go in first.
 6. **Anything you specifically do not want?** Vendor press releases, stock
@@ -77,6 +86,12 @@ For each beat, use WebSearch and WebFetch to assemble **six to twelve sources**:
   late, and the primary source is the only place the dates are authoritative.
 - **Trade press** that actually covers the beat, not general business media.
 - **Associations and practitioner outlets** in their field.
+- **Regional bodies, if they named a region in question 4.** State regulators
+  and commissions, state programs and offices, regional operators and authorities,
+  metro business journals, county and city dockets. A local decision usually
+  appears nowhere else, and these are easy to skip past when an obvious national
+  source is sitting right there. A regional beat with only national sources is
+  the most common way this comes out disappointing.
 - Anything they named in question 5, checked like the rest.
 
 **Verify every source before you list it.** Open it. Confirm it is live,

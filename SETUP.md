@@ -43,6 +43,13 @@ while creating the routine. Nothing to sign up for, no keys, no credit card.
 The brief command leads its final message with the link to that morning's page,
 so the notification you get is tappable straight through to the brief.
 
+**Verify it before you rely on it.** This notification is a summary the platform
+decides to send when a run finishes — it is not a message this kit controls, and
+it is best-effort rather than guaranteed on every run. After you create the
+routine in Step 5, press **Run now** and confirm something actually reaches you.
+If nothing arrives, use Option B: Pushover fires deterministically because
+`notify.py` calls its API directly.
+
 **If that's all you want, skip to Step 3.**
 
 ### Option B — Pushover (optional upgrade)
